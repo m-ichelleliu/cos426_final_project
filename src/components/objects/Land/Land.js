@@ -7,6 +7,16 @@ class Land extends Group {
         // Call parent Group() constructor
         super();
 
+        // Init state
+        // this.state = {
+        //     gui: parent.state.gui,
+        //     //width: null,
+        //     //length: null
+        // };
+
+        //this.width = 1000;
+        //this.length = 1000;
+
         const loader = new GLTFLoader();
 
         this.name = 'land';
