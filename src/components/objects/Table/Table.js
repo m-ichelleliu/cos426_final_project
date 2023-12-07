@@ -29,7 +29,7 @@ class Table extends Group {
             this.direction = new THREE.Vector3(1, 0, 0);
         }
 
-        this.speed = 10;
+        this.speed = 0.1;
         // check that it doesnt overlap, otherwise bounce
 
         this.name = 'table';
@@ -52,8 +52,8 @@ class Table extends Group {
     
     // move in same direction (x or y) for now
     update(timeStamp) {
-        const floorWidth = 1000;
-        const floorLength = 1000; 
+        const floorWidth = 10;
+        const floorLength = 10; 
 
         // updating direction of table
         let newPos = this.position.clone().add(this.direction.clone().multiplyScalar(this.speed));
