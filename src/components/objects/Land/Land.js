@@ -3,14 +3,11 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import MODEL from './land.gltf';
 import * as THREE from 'three';
 
-// /** @namespace */
-// var Land = Land || {
-//     dimensions = new THREE.Vector3(),
-// };
-
 class Land extends Group {
    
     constructor() {
+        var LAND_DIMENSIONS = new THREE.Vector3();
+        
         // Call parent Group() constructor
         super();
 
@@ -40,7 +37,8 @@ class Land extends Group {
 
             // Get the dimensions
             this.state.dimensions = boundingBox.getSize(new THREE.Vector3());
-            // LAND_DIMENSIONS = boundingBox.getSize(new THREE.Vector3());
+            LAND_DIMENSIONS = boundingBox.getSize(new THREE.Vector3());
+            console.log(LAND_DIMENSIONS.x);
             console.log('Model Dimensions:', this.state.dimensions.x, this.state.dimensions.y, this.state.dimensions.z);
             this.add(gltf.scene);
         });

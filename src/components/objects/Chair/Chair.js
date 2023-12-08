@@ -2,7 +2,6 @@ import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import MODEL from './chair.glb';
 import * as THREE from 'three';
-// import {LAND_DIMENSIONS} from '../objects/Land/Land.js';
 
 class Chair extends Group {
     constructor(parent) {
@@ -38,7 +37,7 @@ class Chair extends Group {
         } else if (this.position.z > 0) {
             this.position.z = 0;
         }
-        console.log("hi" + "x: " + this.position.x + "y: " + this.position.y + "z: " + this.position.z);
+        // console.log("hi" + "x: " + this.position.x + "y: " + this.position.y + "z: " + this.position.z);
 
         // decide direction 
         let rand = Math.random();
@@ -71,20 +70,20 @@ class Chair extends Group {
     
     // move in same direction (x or y) for now
     update(timeStamp) {
-        // const floorWidth = 10; 
-        // const floorHeight = 5; 
+        const floorWidth = 10; 
+        const floorHeight = 5; 
 
-        // // updating direction of table if it reaches edge of floor
-        // let newPos = this.position.clone().add(this.direction.clone().multiplyScalar(this.speed));
-        // if (newPos.x < -6 || newPos.x > 6) {
-        //     this.direction = new THREE.Vector3(this.direction.x * -1, 0, 0);
-        // }
-        // if (newPos.y < 0.2 || newPos.y > floorHeight) {
-        //     this.direction = new THREE.Vector3(0, this.direction.y * -1, 0, 0);
-        // }
+        // updating direction of table if it reaches edge of floor
+        let newPos = this.position.clone().add(this.direction.clone().multiplyScalar(this.speed));
+        if (newPos.x < -6 || newPos.x > 6) {
+            this.direction = new THREE.Vector3(this.direction.x * -1, 0, 0);
+        }
+        if (newPos.y < 0.2 || newPos.y > floorHeight) {
+            this.direction = new THREE.Vector3(0, this.direction.y * -1, 0, 0);
+        }
 
-        // // update position of table
-        // this.position.add(this.direction.clone().multiplyScalar(this.speed));
+        // update position of table
+        this.position.add(this.direction.clone().multiplyScalar(this.speed));
 
     }
 
