@@ -19,25 +19,24 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
-        const land = new Land();
+        this.land = new Land();
         // const flower = new Flower(this);
         const lights = new BasicLights();
 
-        this.add(land, lights);
+        this.add(this.land, lights);
 
-        // const tables = []
+        this.tables = [];
+
         const NUM_TABLES = 3;
         for (let i = 0; i < NUM_TABLES; i++) {
             const table = new Table(this);
             this.add(table);
-            // tables.push(table);
+            this.tables.push(table)
         }
 
         const chair = new Chair(this);
         this.add(chair);
         
-        
-
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
         this.rotation.y = 2*Math.PI*.165+Math.PI/2;

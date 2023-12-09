@@ -1,6 +1,7 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import MODEL from './table.glb';
+import { Land as Land } from '../Land/index.js';
 import * as THREE from 'three';
 
 class Table extends Group {
@@ -19,15 +20,18 @@ class Table extends Group {
             position: null,
             speed: null
         };
+
         this.position.add(new THREE.Vector3().random()); //SCALE LATER 
-        if (this.position.x < -6) {
-            this.position.x = -6;
-        } else if (this.position.x > 6) {
-            this.position.x = 6;
+
+        if (this.position.x < -1 * Land.width / 2) {
+            this.position.x = -1 * Land.width / 2;
+        } else if (this.position.x > Land.width / 2) {
+            this.position.x = Land.width / 2;
         }
         if (this.position.y < 0.4) {
             this.position.y = 0.4;
         }
+        console.log("Land", Land.width, Land.height)
         // console.log("hi" + this.position.y);
 
         // decide direction 
@@ -46,6 +50,7 @@ class Table extends Group {
         
         // Add self to parent's update list
         parent.addToUpdateList(this);
+
     }
 
     addTable() {
@@ -60,12 +65,13 @@ class Table extends Group {
     
     // move in same direction (x or y) for now
     update(timeStamp) {
-        const floorWidth = 10;
         const floorHeight = 5; 
+
+        // console.log(this.boundingBox)
 
         // updating direction of table if it reaches edge of floor
         let newPos = this.position.clone().add(this.direction.clone().multiplyScalar(this.speed));
-        if (newPos.x < -6 || newPos.x > 6) {
+        if (newPos.x < -1 * Land.width / 2 || newPos.x >= Land.width / 2) {
             this.direction = new THREE.Vector3(this.direction.x * -1, 0, 0);
         }
         if (newPos.y < 0.4 || newPos.y > floorHeight) {
@@ -74,9 +80,7 @@ class Table extends Group {
 
         // update position of table
         this.position.add(this.direction.clone().multiplyScalar(this.speed));
-
     }
-
 }
 
 export default Table;
