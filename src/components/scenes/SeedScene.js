@@ -34,8 +34,13 @@ class SeedScene extends Scene {
             this.tables.push(table)
         }
 
-        const chair = new Chair(this);
-        this.add(chair);
+        this.chairs = [];
+        const NUM_CHAIRS = 3;
+        for (let i = 0; i < NUM_CHAIRS; i++) {
+            const chair = new Chair(this);
+            this.add(chair);
+            this.chairs.push(chair)
+        }
         
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);

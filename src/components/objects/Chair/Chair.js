@@ -2,6 +2,7 @@ import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import MODEL from './chair.glb';
 import * as THREE from 'three';
+import { Land as Land } from '../Land/index.js';
 
 class Chair extends Group {
     constructor(parent) {
@@ -19,13 +20,13 @@ class Chair extends Group {
             position: null,
             speed: null
         };
-        const SCALE = new THREE.Vector3(12, 4, 12);
-        const OFFSET = new THREE.Vector3(-6, 0.4, -6);
-        this.position.add(new THREE.Vector3().random().multiply(SCALE).add(OFFSET)); //SCALE LATER 
-        if (this.position.x < -6) {
-            this.position.x = -6;
-        } else if (this.position.x > 6) {
-            this.position.x = 6;
+        // const SCALE = new THREE.Vector3(12, 4, 12);
+        // const OFFSET = new THREE.Vector3(-6, 0.4, -6);
+        this.position.add(new THREE.Vector3().random());//.multiply(SCALE).add(OFFSET)); //SCALE LATER 
+        if (this.position.x < -1 * Land.width / 2) {
+            this.position.x = -1 * Land.width / 2;
+        } else if (this.position.x > Land.width / 2) {
+            this.position.x = Land.width / 2;
         }
         if (this.position.y < 0.4) {
             this.position.y = 0.4;
@@ -71,14 +72,14 @@ class Chair extends Group {
     // move in same direction (x or y) for now
     update(timeStamp) {
         const floorWidth = 10; 
-        const floorHeight = 5; 
+        const floorHeight = 4; 
 
         // updating direction of table if it reaches edge of floor
         let newPos = this.position.clone().add(this.direction.clone().multiplyScalar(this.speed));
-        if (newPos.x < -6 || newPos.x > 6) {
+        if (newPos.x < -1 * Land.width / 2 || newPos.x >= Land.width / 2) {
             this.direction = new THREE.Vector3(this.direction.x * -1, 0, 0);
         }
-        if (newPos.y < 0.2 || newPos.y > floorHeight) {
+        if (newPos.y < 0 || newPos.y > floorHeight) {
             this.direction = new THREE.Vector3(0, this.direction.y * -1, 0, 0);
         }
 
