@@ -34,8 +34,9 @@ class PlayerA extends Group {
         };
 
         // make player A start at a corner
-        const startPos = new THREE.Vector3(0,0,0);
+        const startPos = new THREE.Vector3(5,0,5);
         this.position.add(startPos);
+        console.log("Person startPos", startPos)
 
         // decide direction
         this.state.direction = new THREE.Vector3();

@@ -1,6 +1,6 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import MODEL from './land.gltf';
+import MODEL from './floor.glb';
 import * as THREE from 'three';
 
 class Land extends Group {
@@ -8,8 +8,6 @@ class Land extends Group {
     static height = 10; // z direction
 
     constructor() {
-        var LAND_DIMENSIONS = new THREE.Vector3();
-
         // Call parent Group() constructor
         super();
 
@@ -37,15 +35,19 @@ class Land extends Group {
             // Get the dimensions
             this.state.dimensions = roundingBox.getSize(new THREE.Vector3());
             this.state.boundingBox = roundingBox.clone();
+            // console.log('Model Dimensions:', this.state.dimensions.x, this.state.dimensions.y, this.state.dimensions.z);
+            console.log("bounding box original", roundingBox)
+            console.log("width want", Land.width)
+            console.log("but dimension is", this.state.dimensions.x)
 
-            const scale = Land.width / this.state.dimensions.x;
+            const scale = Land.width / this.state.dimensions.x * 2.5; // The 2.5 is voodoo magic
+            console.log("so scale is ", scale)
 
             gltf.scene.scale.set(scale, scale, scale);
 
-            this.test = 'hi';
-            this.boundingBox = roundingBox.clone();
+            // this.test = 'hi';
             // LAND_DIMENSIONS = boundingBox.getSize(new THREE.Vector3());
-            console.log('Model Dimensions:', this.state.dimensions.x, this.state.dimensions.y, this.state.dimensions.z);
+            console.log('new Dimensions:', new THREE.Box3().setFromObject(gltf.scene));
             this.add(gltf.scene);
         });
     }
