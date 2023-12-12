@@ -18,6 +18,10 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.html$/i,
+                loader: 'html-loader',
+            },
+            {
                 test: /\.js$/,
                 use: 'babel-loader',
                 exclude: path.resolve(__dirname, './node_modules/'),

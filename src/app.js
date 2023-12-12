@@ -13,6 +13,7 @@ import { SeedScene } from 'scenes';
 import *  as handlers from './handlers.js';
 
 import * as THREE from "three";
+import * as pages from "./pages.js";
 
 // Initialize core ThreeJS components
 const scene = new SeedScene();
@@ -80,4 +81,29 @@ window.addEventListener('resize', windowResizeHandler, false);
 window.addEventListener('keydown', event => handlers.handleKeyDown(event, keypress), false);
 window.addEventListener('keyup', event => handlers.handleKeyUp(event, keypress), false);
 
-export default scene;
+let game_ongoing = false;
+
+pages.init_page(document);
+window.addEventListener('click', function (event) {
+    console.log("clicked");
+    if (!game_ongoing) {
+        game_ongoing = true;
+        pages.start_game(document, canvas);
+    }
+    // if (!animationLoopRunning) {
+    //     startAnimationLoop();
+    // }
+    // Check if the pressed key is the space key (key code 32)
+    // if (event.code === 'Space') {
+    //     // If the game has not started, start it
+    //     if (!gameStarted) {
+    //         gameStarted = true;
+    //         // Call the renderGame function
+    //         renderGame();
+    //     }
+    // }
+
+
+});
+
+// export default scene;
