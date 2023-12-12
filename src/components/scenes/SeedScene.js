@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Flower, Land, Table, Chair} from 'objects';
+import { Flower, Land, Table, Chair, PlayerA, PlayerB} from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -41,7 +41,12 @@ class SeedScene extends Scene {
             this.add(chair);
             this.chairs.push(chair)
         }
-        
+
+        const playerA = new PlayerA(this);
+        this.add(playerA)
+        const playerB = new PlayerB(this);
+        this.add(playerB)
+
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
         this.rotation.y = 2*Math.PI*.165+Math.PI/2;
