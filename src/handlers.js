@@ -1,6 +1,7 @@
 import * as THREE from "three";
 
 import { Land as Land } from '/src/components/objects/Land/index.js';
+import { Chicken} from '/src/components/objects';
 
 // handle user controls input
 // key pressed
@@ -12,6 +13,7 @@ export function handleKeyDown(event, keypress) {
     if (event.key == "ArrowLeft") keypress['left'] = true;
     if (event.key == "ArrowRight") keypress['right'] = true;
     if (event.key == "m" || event.key == "M" ) keypress['m'] = true;
+    if (event.key == "Enter") keypress['enter'] = true;
 
     // player B controls
     if (event.key == "w" || event.key == "W" ) keypress['w'] = true;
@@ -39,7 +41,7 @@ export function handleKeyUp(event, keypress) {
 
 }
 
-export function handlePlayerAControls(scene, keypress, character) {
+export function handlePlayerAControls(scene, keypress, character, timeStamp) {
     let playerA = scene.getObjectByName(character);
     let speed = playerA.state.speed;
     if (keypress['up']) {
@@ -67,10 +69,20 @@ export function handlePlayerAControls(scene, keypress, character) {
         keypress['m'] = false;
         playerA.state.jump = true;
     }
+    if (keypress['enter']) {
+        keypress['enter'] = false;
+
+        const chicken = new Chicken(scene);
+        chicken.state.player = playerA;
+        chicken.state.startTime = timeStamp;
+        chicken.state.startPos.copy(playerA.position);
+        scene.add(chicken);
+        // playerA.state.shoot = true;
+    }
 
 }
 
-export function handlePlayerBControls(scene, keypress, character) {
+export function handlePlayerBControls(scene, keypress, character, timeStamp) {
     let playerB = scene.getObjectByName(character);
     let speed = playerB.state.speed;
     if (keypress['w']) {

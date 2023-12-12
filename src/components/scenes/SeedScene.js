@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Flower, Land, Table, Chair, PlayerA, PlayerB} from 'objects';
+import { Flower, Land, Table, Chair, PlayerA, PlayerB, Chicken} from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -63,6 +63,10 @@ class SeedScene extends Scene {
         // Call update for each object in the updateList
         for (const obj of updateList) {
             obj.update(timeStamp);
+            // if chicken landed, remove it
+            if (obj.name == "chicken" && obj.state.landed) {
+                this.remove(obj);
+            }
         }
     }
 }

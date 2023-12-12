@@ -60,8 +60,8 @@ const onAnimationFrameHandler = (timeStamp) => {
     window.requestAnimationFrame(onAnimationFrameHandler);
 
     // start game
-    handlers.handlePlayerAControls(scene, keypress, playerA);
-    handlers.handlePlayerBControls(scene, keypress, playerB);
+    handlers.handlePlayerAControls(scene, keypress, playerA, timeStamp);
+    handlers.handlePlayerBControls(scene, keypress, playerB, timeStamp);
 
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
