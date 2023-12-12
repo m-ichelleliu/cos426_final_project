@@ -4,8 +4,8 @@ import MODEL from './land.gltf';
 import * as THREE from 'three';
 
 class Land extends Group {
-    static width = 10;
-    static height = 10;
+    static width = 10; // x direction
+    static height = 10; // z direction
 
     constructor() {
         var LAND_DIMENSIONS = new THREE.Vector3();

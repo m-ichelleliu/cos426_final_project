@@ -1,6 +1,9 @@
 import * as THREE from "three";
 
+import { Land as Land } from '/src/components/objects/Land/index.js';
+
 // handle user controls input
+// key pressed
 export function handleKeyDown(event, keypress) {
 
     // player A controls
@@ -8,15 +11,19 @@ export function handleKeyDown(event, keypress) {
     if (event.key == "ArrowDown") keypress['down'] = true;
     if (event.key == "ArrowLeft") keypress['left'] = true;
     if (event.key == "ArrowRight") keypress['right'] = true;
+    if (event.key == "m" || event.key == "M" ) keypress['m'] = true;
 
     // player B controls
-    if (event.key == "w") keypress['w'] = true;
-    if (event.key == "a") keypress['a'] = true;
-    if (event.key == "s") keypress['s'] = true;
-    if (event.key == "d") keypress['d'] = true;
+    if (event.key == "w" || event.key == "W" ) keypress['w'] = true;
+    if (event.key == "a" || event.key == "A" ) keypress['a'] = true;
+    if (event.key == "s" || event.key == "S" ) keypress['s'] = true;
+    if (event.key == "d" || event.key == "D" ) keypress['d'] = true;
+    if (event.key == " ") keypress['space'] = true;
+
 }
 
 // terminate the action caused by user controls input
+// key released
 export function handleKeyUp(event, keypress) {
     // player A controls
     if (event.key == "ArrowUp") keypress['up'] = false;
@@ -29,12 +36,18 @@ export function handleKeyUp(event, keypress) {
     if (event.key == "a") keypress['a'] = false;
     if (event.key == "s") keypress['s'] = false;
     if (event.key == "d") keypress['d'] = false;
+
 }
 
 export function handlePlayerAControls(scene, keypress, character) {
     let playerA = scene.getObjectByName(character);
-    let speed = 0.1;
+    let speed = playerA.state.speed;
     if (keypress['up']) {
+        // check if reached bounds
+        // const newZ = playerA.position.z - speed;
+        // if (newZ < -1 * Land.height / 2 || newPos.x >= Land.width / 2) {
+        //     this.direction = new THREE.Vector3(this.direction.x * -1, 0, 0);
+        // }
         // switch direction to into the page
         // move forward
         playerA.position.z -= speed;
@@ -50,11 +63,16 @@ export function handlePlayerAControls(scene, keypress, character) {
     }
 
     // bind keys for jumping and shooting
+    if (keypress['m']) {
+        keypress['m'] = false;
+        playerA.state.jump = true;
+    }
+
 }
 
 export function handlePlayerBControls(scene, keypress, character) {
     let playerB = scene.getObjectByName(character);
-    let speed = 0.1;
+    let speed = playerB.state.speed;
     if (keypress['w']) {
         playerB.position.z -= speed;
     }
@@ -66,6 +84,11 @@ export function handlePlayerBControls(scene, keypress, character) {
     }
     if (keypress['d']) {
         playerB.position.x += speed;
+    }
+
+    if (keypress['space']) {
+        keypress['space'] = false;
+        playerB.state.jump = true;
     }
 
     // bind keys for jumping and shooting

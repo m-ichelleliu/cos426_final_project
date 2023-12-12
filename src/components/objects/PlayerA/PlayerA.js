@@ -2,6 +2,7 @@ import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import MODEL from './Adventurer.glb';
 import * as THREE from 'three';
+import { DIRECTIONS } from '../../../app';
 
 class PlayerA extends Group {
     constructor(parent) {
@@ -16,8 +17,20 @@ class PlayerA extends Group {
             // gui: parent.state.gui,
             // pos: smth
             direction: null, // whether it moves x or y
-            position: null,
-            speed: null
+            speed: null,
+            // parameters for jumping
+            jump: null, // jump pressed
+            jumping: null,
+            jumpPos: null,
+            jumpAngle: null,
+            jumpVelocity: null,
+            jumpTime: null,
+            // parameters for shooting projectiles
+            shoot: null,
+            shootStartTime: null,
+            shootPos: null,
+            shootAngle: null,
+            shootVelocity: null
         };
 
         // make player A start at a corner
@@ -25,10 +38,22 @@ class PlayerA extends Group {
         this.position.add(startPos);
 
         // decide direction
-        this.direction = new THREE.Vector3(0, 1, 0);
+        this.state.direction = new THREE.Vector3();
+        console.log(DIRECTIONS);
 
-        this.speed = 0.05;
-        // check that it doesnt overlap, otherwise bounce
+        this.state.speed = 0.05;
+
+        // init jumping params
+        this.state.jump = false; // pressed jump
+        this.state.jumping = false; // mid jump
+        this.state.jumpPos = startPos; // init jump pos
+        this.state.jumpVelocity = new THREE.Vector3(0,10,0);
+        this.state.jumpAngle = Math.PI/2;
+
+        // initialize shooting variables
+        this.state.shoot = false;
+        this.state.shootAngle = Math.PI/4;
+        this.state.shootVelocity = 0.01;
 
         this.name = 'playerA';
         this.addPlayerA();
@@ -51,20 +76,41 @@ class PlayerA extends Group {
 
     // move in same direction (x or y) for now
     update(timeStamp) {
-        // const floorWidth = 10;
-        // const floorHeight = 5;
+        // check if jump
 
-        // // updating direction of table if it reaches edge of floor
-        // let newPos = this.position.clone().add(this.direction.clone().multiplyScalar(this.speed));
-        // if (newPos.x < -6 || newPos.x > 6) {
-        //     this.direction = new THREE.Vector3(this.direction.x * -1, 0, 0);
-        // }
-        // if (newPos.y < 0.2 || newPos.y > floorHeight) {
-        //     this.direction = new THREE.Vector3(0, this.direction.y * -1, 0, 0);
-        // }
+        if (this.state.jump) {
 
-        // // update position of table
-        // this.position.add(this.direction.clone().multiplyScalar(this.speed));
+            this.state.jumping = true;
+            this.state.jumpPos.copy(this.position);
+            this.state.jumpTime = timeStamp;
+            // console.log("jump velocity:", this.state.jumpVelocity);
+            this.state.jump = false;
+            // console.log(this.state.jump);
+        }
+        if (this.state.jumping) {
+
+
+            // y_t = y_0 + v_0*t*sintheta - 0.5gt^2
+            // y_0 is always 0 (assuming no double jumps)
+            const GRAVITY = new THREE.Vector3(0, -9.81, 0);
+            const deltaT = (timeStamp - this.state.jumpTime)/100;
+            // const velocityCoeff = deltaT*Math.sin(this.state.jumpAngle);
+            const velocity = this.state.jumpVelocity.clone().multiplyScalar(deltaT);
+            // const accelCoeff = 0.5*deltaT*deltaT;
+            const accel = GRAVITY.clone().multiplyScalar( 0.5*deltaT*deltaT);
+
+            const newPos = new THREE.Vector3().copy(this.state.jumpPos);
+            newPos.add(velocity).add(accel);
+            // console.log(deltaT, this.state.jumpTime, this.state.jumpPos, newPos);
+
+            // check if landed
+            if (timeStamp != this.state.jumpTime && newPos.y <= 0) {
+                newPos.y = 0;
+                this.state.jumping = false;
+            }
+
+            this.position.copy(newPos);
+        }
 
     }
 
