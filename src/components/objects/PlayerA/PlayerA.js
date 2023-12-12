@@ -26,11 +26,11 @@ class PlayerA extends Group {
             jumpVelocity: null,
             jumpTime: null,
             // parameters for shooting projectiles
-            shoot: null,
-            shootStartTime: null,
-            shootPos: null,
-            shootAngle: null,
-            shootVelocity: null
+            // shoot: null,
+            // shootStartTime: null,
+            // shootPos: null,
+            // shootAngle: null,
+            // shootVelocity: null
         };
 
         // make player A start at a corner
