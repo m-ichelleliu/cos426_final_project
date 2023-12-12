@@ -2,6 +2,7 @@ import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import MODEL from './table.glb';
 import { Land as Land } from '../Land/index.js';
+import { Chair as Chair } from '../Chair/index.js';
 import * as THREE from 'three';
 
 class Table extends Group {
@@ -20,8 +21,26 @@ class Table extends Group {
             position: null,
             speed: null
         };
-
-        this.position.add(new THREE.Vector3().random()); //SCALE LATER 
+        // while (true) {
+            this.position.add(new THREE.Vector3().random().multiplyScalar(Land.width - 1).subScalar(Land.width / 2 - 0.5)); //SCALE LATER 
+            // let items = this.parent.children;
+            // let all_clear = true;
+            // for (let item of items) {
+            //     if (item instanceof Table) {
+            //         let thatBox = new THREE.Box3().setFromObject(item);
+            //         let thisBox = new THREE.Box3().setFromObject(this);
+            //         // console.log(thatBox.intersectsBox(thisBox))
+            //         if (thatBox.intersectsBox(thisBox)) {
+            //             all_clear = false;
+            //             break;
+            //         }
+            //     }
+            // }
+            // if (all_clear) {
+            //     break;
+            // }
+        //     break;
+        // }
 
         if (this.position.x < -1 * Land.width / 2) {
             this.position.x = -1 * Land.width / 2;
@@ -42,7 +61,7 @@ class Table extends Group {
             this.direction = new THREE.Vector3(1, 0, 0);
         }
 
-        this.speed = 0.05;
+        this.speed = Math.random() * 0.05 + 0.05;
         // check that it doesnt overlap, otherwise bounce
 
         this.name = 'table';
@@ -71,8 +90,9 @@ class Table extends Group {
 
         // updating direction of table if it reaches edge of floor
         let newPos = this.position.clone().add(this.direction.clone().multiplyScalar(this.speed));
-        if (newPos.x < -1 * Land.width / 2 || newPos.x >= Land.width / 2) {
+        if (newPos.x < -1 * Land.width || newPos.x >= Land.width) {
             this.direction = new THREE.Vector3(this.direction.x * -1, 0, 0);
+            // console.log("Wall bounce", newPos.x)
         }
         if (newPos.y < 0.4 || newPos.y > floorHeight) {
             this.direction = new THREE.Vector3(0, this.direction.y * -1, 0, 0);
@@ -80,6 +100,24 @@ class Table extends Group {
 
         // update position of table
         this.position.add(this.direction.clone().multiplyScalar(this.speed));
+
+        this.handleCollisions();
+        
+    }
+
+    handleCollisions() {
+        let items = this.parent.children
+        for (let item of items) {
+            if (item instanceof Table || item instanceof Chair) {
+                let thatBox = new THREE.Box3().setFromObject(item);
+                let thisBox = new THREE.Box3().setFromObject(this);
+                // console.log(thatBox.intersectsBox(thisBox))
+                if (thatBox.intersectsBox(thisBox)) {
+                    item.direction.multiplyScalar(-1);
+                    this.direction.multiplyScalar(-1);
+                }
+            }
+        }
     }
 }
 

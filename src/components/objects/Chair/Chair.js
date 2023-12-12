@@ -22,7 +22,8 @@ class Chair extends Group {
         };
         // const SCALE = new THREE.Vector3(12, 4, 12);
         // const OFFSET = new THREE.Vector3(-6, 0.4, -6);
-        this.position.add(new THREE.Vector3().random());//.multiply(SCALE).add(OFFSET)); //SCALE LATER 
+        this.position.add(new THREE.Vector3().random()).multiplyScalar(Land.width - 1).subScalar(Land.width / 2 - 0.5); //SCALE LATER 
+        console.log(this.position)
         if (this.position.x < -1 * Land.width / 2) {
             this.position.x = -1 * Land.width / 2;
         } else if (this.position.x > Land.width / 2) {
@@ -33,10 +34,10 @@ class Chair extends Group {
         } else if (this.position.y > 2) {
             this.position.y = 2;
         }
-        if (this.position.z < -6) {
-            this.position.z = -6;
-        } else if (this.position.z > 0) {
-            this.position.z = 0;
+        if (this.position.z < -1 * Land.height / 2) {
+            this.position.z < -1 * Land.height / 2;
+        } else if (this.position.z < -1 * Land.height / 2) {
+            this.position.z < -1 * Land.height / 2;
         }
         // console.log("hi" + "x: " + this.position.x + "y: " + this.position.y + "z: " + this.position.z);
 
@@ -71,7 +72,6 @@ class Chair extends Group {
     
     // move in same direction (x or y) for now
     update(timeStamp) {
-        const floorWidth = 10; 
         const floorHeight = 4; 
 
         // updating direction of table if it reaches edge of floor
@@ -86,6 +86,23 @@ class Chair extends Group {
         // update position of table
         this.position.add(this.direction.clone().multiplyScalar(this.speed));
 
+        this.handleCollisions();
+        
+    }
+
+    handleCollisions() {
+        let items = this.parent.children
+        for (let item of items) {
+            if (item instanceof Chair) {
+                let thatBox = new THREE.Box3().setFromObject(item);
+                let thisBox = new THREE.Box3().setFromObject(this);
+                // console.log(thatBox.intersectsBox(thisBox))
+                if (thatBox.intersectsBox(thisBox)) {
+                    item.direction.multiplyScalar(-1);
+                    this.direction.multiplyScalar(-1);
+                }
+            }
+        }
     }
 
 }
