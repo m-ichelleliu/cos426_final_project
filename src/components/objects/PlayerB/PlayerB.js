@@ -2,7 +2,10 @@ import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Chicken} from '/src/components/objects';
 import MODEL from './Hooded_Adventurer.glb';
+import { Chair as Chair } from '../Chair/index.js';
+import { Table as Table } from '../Table/index.js';
 import * as THREE from 'three';
+import * as pages from '../../../pages.js';
 
 const DIRECTION_VECTOR =
 {'N' : new THREE.Vector3(0,0,-1),
@@ -104,6 +107,7 @@ class PlayerB extends Group {
 
             this.state.shoot = false;
         }
+        this.handleCollisions();
 
         // check if jump
 
@@ -116,6 +120,7 @@ class PlayerB extends Group {
             this.state.jump = false;
             // console.log(this.state.jump);
         }
+
         if (this.state.jumping) {
 
 
@@ -139,6 +144,21 @@ class PlayerB extends Group {
             }
 
             this.position.copy(newPos);
+        }
+    }
+
+    handleCollisions() {
+        // console.log("hi")
+        let items = this.parent.children
+        for (let item of items) {
+            if (item instanceof Table || item instanceof Chair) {
+                let thatBox = new THREE.Box3().setFromObject(item);
+                let thisBox = new THREE.Box3().setFromObject(this);
+                // console.log(thatBox.intersectsBox(thisBox))
+                if (thatBox.intersectsBox(thisBox)) {
+                    pages.game_over(document, false);
+                }
+            }
         }
     }
 
