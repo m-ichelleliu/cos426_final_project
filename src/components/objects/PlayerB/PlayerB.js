@@ -151,11 +151,14 @@ class PlayerB extends Group {
         // console.log("hi")
         let items = this.parent.children
         for (let item of items) {
-            if (item instanceof Table || item instanceof Chair) {
+            if (item instanceof Table || item instanceof Chair || item instanceof Chicken) {
                 let thatBox = new THREE.Box3().setFromObject(item);
                 let thisBox = new THREE.Box3().setFromObject(this);
                 // console.log(thatBox.intersectsBox(thisBox))
                 if (thatBox.intersectsBox(thisBox)) {
+                    if (item instanceof Chicken && item.state.player == this) {
+                        continue;
+                    }
                     pages.game_over(document, false);
                 }
             }
