@@ -1,7 +1,21 @@
 import * as THREE from "three";
 
 import { Land as Land } from '/src/components/objects/Land/index.js';
-import { Chicken} from '/src/components/objects';
+import { PlayerA } from "./components/objects";
+
+const DIRECTION_VECTOR =
+{'N' : new THREE.Vector3(0,0,-1),
+'E' : new THREE.Vector3(1,0,0),
+'S' : new THREE.Vector3(0,0,1),
+'W' : new THREE.Vector3(-1,0,0)
+};
+
+const DIRECTION_IDX =
+{'N' : 0,
+'E' : 1,
+'S' : 2,
+'W' : 3
+};
 
 // handle user controls input
 // key pressed
@@ -62,6 +76,14 @@ export function handlePlayerAControls(scene, keypress, character, timeStamp) {
     }
     if (keypress['right']) {
         playerA.position.x += speed;
+
+        // // determine how much to turn player model
+        // const rotationOffset = DIRECTION_IDX[playerA.state.direction] - DIRECTION_IDX['E'] * Math.PI/4;
+        // playerA.rotation.y += rotationOffset;
+
+        // update player direction
+        playerA.state.direction = 'E';
+        // console.log(playerA.state.direction);
     }
 
     // bind keys for jumping and shooting
@@ -72,12 +94,7 @@ export function handlePlayerAControls(scene, keypress, character, timeStamp) {
     if (keypress['enter']) {
         keypress['enter'] = false;
 
-        const chicken = new Chicken(scene);
-        chicken.state.player = playerA;
-        chicken.state.startTime = timeStamp;
-        chicken.state.startPos.copy(playerA.position);
-        scene.add(chicken);
-        // playerA.state.shoot = true;
+        playerA.state.shoot = true;
     }
 
 }

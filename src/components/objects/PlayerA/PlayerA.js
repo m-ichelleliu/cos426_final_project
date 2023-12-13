@@ -1,8 +1,22 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { Chicken} from '/src/components/objects';
 import MODEL from './Adventurer.glb';
 import * as THREE from 'three';
-import { DIRECTIONS } from '../../../app';
+
+const DIRECTION_VECTOR =
+{'N' : new THREE.Vector3(0,0,-1),
+'E' : new THREE.Vector3(1,0,0),
+'S' : new THREE.Vector3(0,0,1),
+'W' : new THREE.Vector3(-1,0,0)
+};
+
+const DIRECTION_IDX =
+{'N' : 0,
+'E' : 1,
+'S' : 2,
+'W' : 3
+};
 
 class PlayerA extends Group {
     constructor(parent) {
@@ -16,7 +30,11 @@ class PlayerA extends Group {
         this.state = {
             // gui: parent.state.gui,
             // pos: smth
-            direction: null, // whether it moves x or y
+            parent: parent,
+            prev_direction: null,
+            direction: 'S',
+            DIRECTION_VECTOR: DIRECTION_VECTOR['S'], // whether it moves x or y
+            direction_idx: DIRECTION_IDX['S'],
             speed: null,
             // parameters for jumping
             jump: null, // jump pressed
@@ -37,10 +55,6 @@ class PlayerA extends Group {
         const startPos = new THREE.Vector3(-5,0,-5);
         this.position.add(startPos);
         console.log("Person startPos", startPos)
-
-        // decide direction
-        this.state.direction = new THREE.Vector3();
-        console.log(DIRECTIONS);
 
         this.state.speed = 0.05;
 
@@ -77,6 +91,20 @@ class PlayerA extends Group {
 
     // move in same direction (x or y) for now
     update(timeStamp) {
+        // check if shoot
+
+        if (this.state.shoot) {
+            const scene = this.state.parent;
+
+            const chicken = new Chicken(scene);
+            chicken.state.player = this;
+            chicken.state.startTime = timeStamp;
+            chicken.state.startDirection.copy(DIRECTION_VECTOR[this.state.direction]);
+            chicken.state.startPos.copy(this.position);
+            scene.add(chicken);
+
+            this.state.shoot = false;
+        }
         // check if jump
         if (this.state.jump) {
 

@@ -55,6 +55,7 @@ class PlayerB extends Group {
             gltf.scene.position.x = this.position.x;
             gltf.scene.position.y = this.position.y;
             gltf.scene.position.z = this.position.z;
+
             const SCALE = 1.5;
             gltf.scene.scale.set(SCALE, SCALE, SCALE);
             this.add(gltf.scene);
