@@ -1,5 +1,5 @@
 import INSTRUCTIONS from "./instructions.html"
-// import GAMEOVER from "./gameover.html"
+import GAMEOVER from "./gameover.html"
 
 export function init_page(document) {
     document.body.innerHTML = '';
@@ -16,15 +16,18 @@ export function start_game(document, canvas) {
 }
 
 export function game_over(document, p1won) {
+    console.log("document", document)
+    console.log("document body", document.body)
     document.body.innerHTML = '';
     let over = document.createElement('div');
     over.id = 'over';
-    // over.innerHTML = GAMEOVER;
+    over.innerHTML = GAMEOVER;
     let winner;
     if (p1won) {
         winner = "Player 1";
     } else {
         winner = "Player 2";
     }
+    document.body.appendChild(over);
     document.getElementById('message').innerHTML = "Congratulations to " + winner + " for Winning!";
 }

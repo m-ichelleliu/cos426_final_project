@@ -2,6 +2,8 @@ import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Chicken} from '/src/components/objects';
 import MODEL from './Adventurer.glb';
+import { Chair as Chair } from '../Chair/index.js';
+import { Table as Table } from '../Table/index.js';
 import * as THREE from 'three';
 
 const DIRECTION_VECTOR =
@@ -146,6 +148,24 @@ class PlayerA extends Group {
 
         }
 
+        this.handleCollisions();
+
+    }
+
+    handleCollisions() {
+        // console.log("hi")
+        let items = this.parent.children
+        for (let item of items) {
+            if (item instanceof Table || item instanceof Chair) {
+                let thatBox = new THREE.Box3().setFromObject(item, true);
+                let thisBox = new THREE.Box3().setFromObject(this, true);
+                // console.log(thatBox.intersectsBox(thisBox))
+                if (thatBox.intersectsBox(thisBox)) {
+                    console.log(thatBox, thisBox)
+                    pages.game_over(document, true);
+                }
+            }
+        }
     }
 
 }
