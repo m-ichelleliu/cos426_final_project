@@ -1,7 +1,22 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { Chicken} from '/src/components/objects';
 import MODEL from './Hooded_Adventurer.glb';
 import * as THREE from 'three';
+
+const DIRECTION_VECTOR =
+{'N' : new THREE.Vector3(0,0,-1),
+'E' : new THREE.Vector3(1,0,0),
+'S' : new THREE.Vector3(0,0,1),
+'W' : new THREE.Vector3(-1,0,0)
+};
+
+const DIRECTION_IDX =
+{'N' : 0,
+'E' : 1,
+'S' : 2,
+'W' : 3
+};
 
 class PlayerB extends Group {
     constructor(parent) {
@@ -14,7 +29,11 @@ class PlayerB extends Group {
         // Init state
         this.state = {
             // gui: parent.state.gui,
-            direction: null, // whether it moves x or y
+            parent: parent,
+            prev_direction: null,
+            direction: 'S', // whether it moves x or y
+            DIRECTION_VECTOR: DIRECTION_VECTOR['S'], // whether it moves x or y
+            direction_idx: DIRECTION_IDX['S'],
             speed: null,
 
             // parameters for jumping
@@ -42,6 +61,11 @@ class PlayerB extends Group {
         this.state.jumpVelocity = new THREE.Vector3(0,10,0);
         this.state.jumpAngle = Math.PI/2;
 
+        // initialize shooting variables
+        this.state.shoot = false;
+        this.state.shootAngle = Math.PI/4;
+        this.state.shootVelocity = 0.01;
+
         this.name = 'playerB';
         this.addPlayerB();
 
@@ -64,6 +88,23 @@ class PlayerB extends Group {
 
     // move in same direction (x or y) for now
     update(timeStamp) {
+
+        // check if shoot
+        if (this.state.shoot) {
+            const scene = this.state.parent;
+
+            const chicken = new Chicken(scene);
+            chicken.state.player = this;
+            chicken.state.startTime = timeStamp;
+            chicken.state.startDirection.copy(DIRECTION_VECTOR[this.state.direction]);
+            chicken.position.copy(this.position);
+            // console.log("hi " + this.position.x + " " + this.position.y + " " + this.position.z);
+            // console.log(chicken.state.startPos.x + " " + chicken.state.startPos.y + " " + chicken.state.startPos.z);
+            scene.add(chicken);
+
+            this.state.shoot = false;
+        }
+
         // check if jump
 
         if (this.state.jump) {

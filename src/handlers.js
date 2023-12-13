@@ -35,7 +35,7 @@ export function handleKeyDown(event, keypress) {
     if (event.key == "s" || event.key == "S" ) keypress['s'] = true;
     if (event.key == "d" || event.key == "D" ) keypress['d'] = true;
     if (event.key == " ") keypress['space'] = true;
-
+    if (event.key == "Shift") keypress['shift'] = true;
 }
 
 // terminate the action caused by user controls input
@@ -67,12 +67,15 @@ export function handlePlayerAControls(scene, keypress, character, timeStamp) {
         // switch direction to into the page
         // move forward
         playerA.position.z -= speed;
+        playerA.state.direction = 'N';
     }
     if (keypress['down']) {
         playerA.position.z += speed;
+        playerA.state.direction = 'S';
     }
     if (keypress['left']) {
         playerA.position.x -= speed;
+        playerA.state.direction = 'W';
     }
     if (keypress['right']) {
         playerA.position.x += speed;
@@ -104,20 +107,29 @@ export function handlePlayerBControls(scene, keypress, character, timeStamp) {
     let speed = playerB.state.speed;
     if (keypress['w']) {
         playerB.position.z -= speed;
+        playerB.state.direction = 'N';
     }
     if (keypress['s']) {
         playerB.position.z += speed;
+        playerB.state.direction = 'S';
     }
     if (keypress['a']) {
         playerB.position.x -= speed;
+        playerB.state.direction = 'W';
     }
     if (keypress['d']) {
         playerB.position.x += speed;
+        playerB.state.direction = 'E';
     }
 
     if (keypress['space']) {
         keypress['space'] = false;
         playerB.state.jump = true;
+    }
+    if (keypress['shift']) {
+        console.log("playerB shifted")
+        keypress['shift'] = false;
+        playerB.state.shoot = true;
     }
 
     // bind keys for jumping and shooting

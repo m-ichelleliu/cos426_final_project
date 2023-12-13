@@ -100,7 +100,9 @@ class PlayerA extends Group {
             chicken.state.player = this;
             chicken.state.startTime = timeStamp;
             chicken.state.startDirection.copy(DIRECTION_VECTOR[this.state.direction]);
-            chicken.state.startPos.copy(this.position);
+            chicken.position.copy(this.position);
+            // console.log("hi " + this.position.x + " " + this.position.y + " " + this.position.z);
+            // console.log(chicken.state.startPos.x + " " + chicken.state.startPos.y + " " + chicken.state.startPos.z);
             scene.add(chicken);
 
             this.state.shoot = false;

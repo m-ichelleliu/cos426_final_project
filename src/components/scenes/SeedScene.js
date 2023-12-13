@@ -1,6 +1,7 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
 import { Flower, Land, Table, Chair, PlayerA, PlayerB, Chicken} from 'objects';
+import { Land as LandConstant } from '../objects/Land/index.js';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -47,9 +48,10 @@ class SeedScene extends Scene {
         const playerB = new PlayerB(this);
         this.add(playerB)
 
-        const chicken = new Chicken(this);
-        chicken.state.landed = true;
-        this.add(chicken);
+        // const chicken = new Chicken(this);
+        // chicken.state.landed = true;
+        // this.add(chicken);
+        
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
@@ -69,6 +71,9 @@ class SeedScene extends Scene {
             obj.update(timeStamp);
             // if chicken landed, remove it
             // if (obj.name == "chicken" && obj.state.landed) {
+            //     this.remove(obj);
+            // }
+            // if (obj.name == "chicken" && (obj.position.x < -1 * LandConstant.width || obj.position.x > LandConstant.width)) {
             //     this.remove(obj);
             // }
         }
