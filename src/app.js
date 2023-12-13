@@ -14,6 +14,7 @@ import *  as handlers from './handlers.js';
 
 import * as THREE from "three";
 import * as pages from "./pages.js";
+import './style.css';
 
 // Initialize core ThreeJS components
 const scene = new SeedScene();
