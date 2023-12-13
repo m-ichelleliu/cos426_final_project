@@ -47,6 +47,10 @@ class SeedScene extends Scene {
         const playerB = new PlayerB(this);
         this.add(playerB)
 
+        const chicken = new Chicken(this);
+        chicken.state.landed = true;
+        this.add(chicken);
+
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
         this.rotation.y = 2*Math.PI*.165+Math.PI/2;
@@ -64,9 +68,9 @@ class SeedScene extends Scene {
         for (const obj of updateList) {
             obj.update(timeStamp);
             // if chicken landed, remove it
-            if (obj.name == "chicken" && obj.state.landed) {
-                this.remove(obj);
-            }
+            // if (obj.name == "chicken" && obj.state.landed) {
+            //     this.remove(obj);
+            // }
         }
     }
 }

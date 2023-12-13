@@ -44,12 +44,6 @@ controls.update();
 const keypress = {};
 const playerA = 'playerA';
 const playerB = 'playerB';
-export const DIRECTIONS =
-{'N' : new THREE.Vector3(0,0,-1),
-'E' : new THREE.Vector3(1,0,0),
-'S' : new THREE.Vector3(0,0,1),
-'W' : new THREE.Vector3(-1,0,0)
-};
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
