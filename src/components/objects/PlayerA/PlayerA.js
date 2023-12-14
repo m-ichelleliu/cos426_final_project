@@ -159,7 +159,7 @@ class PlayerA extends Group {
         // console.log("hi")
         let items = this.parent.children
         for (let item of items) {
-            if (item instanceof Table || item instanceof Chair) {
+            if (item instanceof Table || item instanceof Chair || item instanceof Chicken) {
                 let thatBox = new THREE.Box3().setFromObject(item, true);
                 let thisBox = new THREE.Box3().setFromObject(this, true);
                 // console.log(thatBox.intersectsBox(thisBox))

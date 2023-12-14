@@ -52,7 +52,7 @@ class Chicken extends Group {
     // move in same direction (x or y) for now
     update(timeStamp) {
         if (this.state.landed) return;
-        console.log("chicken pos: " + this.position.x + " " + this.position.y + " " + this.position.z);
+        // console.log("chicken pos: " + this.position.x + " " + this.position.y + " " + this.position.z);
 
 
         // // y_t = y_0 + v_0*t*sintheta - 0.5gt^2
