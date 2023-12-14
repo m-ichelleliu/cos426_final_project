@@ -164,7 +164,9 @@ class PlayerA extends Group {
                 let thisBox = new THREE.Box3().setFromObject(this, true);
                 // console.log(thatBox.intersectsBox(thisBox))
                 if (thatBox.intersectsBox(thisBox)) {
-                    console.log(thatBox, thisBox)
+                    if (item instanceof Chicken && item.state.player == this) {
+                        continue;
+                    }
                     pages.game_over(document, true);
                 }
             }
