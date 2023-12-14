@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import * as pages from "./pages.js"
 
 import { Land as Land } from '/src/components/objects/Land/index.js';
 import { PlayerA } from "./components/objects";
@@ -133,4 +134,49 @@ export function handlePlayerBControls(scene, keypress, character, timeStamp) {
     }
 
     // bind keys for jumping and shooting
+}
+
+
+export function handleScreens(event, screens, document, canvas, scene) {
+    // quit: game -> ending
+    if (event.key == 'q' && !screens['ending'] && !screens['menu']) {
+        screens['menu'] = false;
+        screens['pause'] = false;
+        screens['ending'] = true;
+        pages.game_over(document, character); // character: winner
+    }
+    // restart: ending -> menu
+    else if (event.key == " " && screens["ending"]) {
+        // reset game
+        screens["ending"] = false;
+        screens['pause'] = false;
+        screens['menu'] = true;
+        pages.init_page(document)
+    }
+    // start: menu -> game
+    else if (event.key == " " && screens["menu"]) {
+        screens["menu"] = false;
+        pages.start_game(document, canvas);
+
+        // clearTimeout(timer);
+
+    }
+    // unpause: pause -> game
+    else if (event.key == 'p' && screens["pause"]) {
+        screens["pause"] = false;
+
+        let pause = document.getElementById("instructions");
+        document.getElementById("pauseText").innerHTML = '';
+        pause.classList.add('invisible');
+    }
+    // pause: game -> pause
+    else if (event.key == 'p' && !screens["ending"]) {
+        screens["pause"] = true;
+
+        let pause = document.getElementById("instructions");
+        document.getElementById("pauseText").innerHTML = "Game Paused";
+        document.getElementById("resumeInstructions").innerHTML = "Press P to resume!";
+        pause.classList.remove('invisible');
+    }
+
 }

@@ -14,7 +14,7 @@ import *  as handlers from './handlers.js';
 
 import * as THREE from "three";
 import * as pages from "./pages.js";
-import './style.css';
+import './styles.css';
 
 // Initialize core ThreeJS components
 const scene = new SeedScene();
@@ -43,6 +43,7 @@ controls.update();
 
 // global variables
 const keypress = {};
+const screens = { "menu": true, "ending": false, "pause": false };
 const playerA = 'playerA';
 const playerB = 'playerB';
 
@@ -51,13 +52,27 @@ const onAnimationFrameHandler = (timeStamp) => {
     // reset game: need to reset character
 
     controls.update();
-    renderer.render(scene, camera);
-    scene.update && scene.update(timeStamp);
+
+    // reset the game on menu screen
+    if (screens['menu']) {
+
+    }
+
     window.requestAnimationFrame(onAnimationFrameHandler);
 
-    // start game
-    handlers.handlePlayerAControls(scene, keypress, playerA, timeStamp);
-    handlers.handlePlayerBControls(scene, keypress, playerB, timeStamp);
+    // on game screen and not paused
+    if (!screens["menu"] && !screens["ending"] && !screens["pause"]) {
+
+        renderer.render(scene, camera);
+        scene.update && scene.update(timeStamp);
+
+        // start game
+        handlers.handlePlayerAControls(scene, keypress, playerA, timeStamp);
+        handlers.handlePlayerBControls(scene, keypress, playerB, timeStamp);
+
+    }
+
+
 
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
@@ -76,29 +91,31 @@ window.addEventListener('resize', windowResizeHandler, false);
 window.addEventListener('keydown', event => handlers.handleKeyDown(event, keypress), false);
 window.addEventListener('keyup', event => handlers.handleKeyUp(event, keypress), false);
 
-let game_ongoing = false;
+window.addEventListener('keydown', event => handlers.handleScreens(event, screens, document, canvas, scene));
 
-pages.init_page(document);
-window.addEventListener('click', function (event) {
-    console.log("clicked");
-    if (!game_ongoing) {
-        game_ongoing = true;
-        pages.start_game(document, canvas);
-    }
-    // if (!animationLoopRunning) {
-    //     startAnimationLoop();
-    // }
-    // Check if the pressed key is the space key (key code 32)
-    // if (event.code === 'Space') {
-    //     // If the game has not started, start it
-    //     if (!gameStarted) {
-    //         gameStarted = true;
-    //         // Call the renderGame function
-    //         renderGame();
-    //     }
-    // }
+// let game_ongoing = false;
+
+// window.addEventListener('click', function (event) {
+//     console.log("clicked");
+//     if (!game_ongoing) {
+//         game_ongoing = true;
+//         pages.start_game(document, canvas);
+//     }
+//     // if (!animationLoopRunning) {
+//     //     startAnimationLoop();
+//     // }
+//     // Check if the pressed key is the space key (key code 32)
+//     // if (event.code === 'Space') {
+//     //     // If the game has not started, start it
+//     //     if (!gameStarted) {
+//     //         gameStarted = true;
+//     //         // Call the renderGame function
+//     //         renderGame();
+//     //     }
+//     // }
 
 
-});
+// });
 
+pages.init_page(document, canvas);
 // export default scene;
