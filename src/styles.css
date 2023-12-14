@@ -33,8 +33,13 @@ hr {
     transform: translate(-50%, -50%);
 }
 #message {
+    background: #f58025;
     color: white;
-    font-size: 2rem;
+    font-size: 50px;
+    padding: 35px;
+    border-radius: 0px;
+    text-align: center;
+    font: sans-serif;
 }
 
 #start {
@@ -48,7 +53,7 @@ hr {
 
 #end, #pauseText {
     position: fixed;
-    top: 50%;
+    top: 0%;
     left: 50%;
     text-align: center;
     /* -webkit-transform: translate(-50%, -50%); */
@@ -95,8 +100,23 @@ hr {
 }
 
 #instructionsText {
-    position: fixed;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    /* position: fixed;
     margin: auto;
+    text-align: center;
+    color: white; */
+}
+
+#gameover {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
     color: white;
 }
