@@ -113,7 +113,9 @@ window.addEventListener('keydown', event => handlers.handleScreens(event, screen
 //     //         renderGame();
 //     //     }
 //     // }
-
+window.addEventListener('dblclick', function(event) {
+    this.location.reload(true);
+});
 
 // });
 
