@@ -6,7 +6,7 @@ import { Chair as Chair } from '../Chair/index.js';
 import * as THREE from 'three';
 
 class Table extends Group {
-    constructor(parent) {
+    constructor(parent, playerA, playerB) {
         // Call parent Group() constructor
         super();
 
@@ -65,6 +65,32 @@ class Table extends Group {
         // check that it doesnt overlap, otherwise bounce
 
         this.name = 'table';
+        while (true) {
+            let noCollisions = true;
+            let boxA = new THREE.Box3().setFromObject(playerA);
+            let boxB = new THREE.Box3().setFromObject(playerB);
+            let thisBox = new THREE.Box3().setFromObject(this);
+            if (boxA.intersectsBox(thisBox) || boxB.intersectsBox(thisBox)) {
+                noCollisions = true;
+                this.position = new THREE.Vector3();
+                this.position.add(new THREE.Vector3().random().multiplyScalar(Land.width - 1).subScalar(Land.width / 2 - 0.5));
+            }
+            // for (let item of items) {
+            //     if (item instanceof PlayerA || item instanceof PlayerB) {
+            //         let thatBox = new THREE.Box3().setFromObject(item);
+            //         let thisBox = new THREE.Box3().setFromObject(this);
+            //         // console.log(thatBox.intersectsBox(thisBox))
+            //         if (thatBox.intersectsBox(thisBox)) {
+            //             this.position = new THREE.Vector3();
+            //             this.position.add(new THREE.Vector3().random()).multiplyScalar(Land.width - 1).subScalar(Land.width / 2 - 0.5);
+            //             noCollisions = false;
+            //         }
+            //     }
+            // }
+            if (noCollisions) {
+                break;
+            }
+        }
         this.addTable();
         
         // Add self to parent's update list

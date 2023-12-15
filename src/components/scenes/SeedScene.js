@@ -25,12 +25,16 @@ class SeedScene extends Scene {
         const lights = new BasicLights();
 
         this.add(this.land, lights);
+        const playerA = new PlayerA(this);
+        this.add(playerA)
+        const playerB = new PlayerB(this);
+        this.add(playerB);
 
         this.tables = [];
 
         const NUM_TABLES = 3;
         for (let i = 0; i < NUM_TABLES; i++) {
-            const table = new Table(this);
+            const table = new Table(this, playerA, playerB);
             this.add(table);
             this.tables.push(table)
         }
@@ -38,15 +42,15 @@ class SeedScene extends Scene {
         this.chairs = [];
         const NUM_CHAIRS = 3;
         for (let i = 0; i < NUM_CHAIRS; i++) {
-            const chair = new Chair(this);
+            const chair = new Chair(this, playerA, playerB);
             this.add(chair);
             this.chairs.push(chair)
         }
 
-        const playerA = new PlayerA(this);
-        this.add(playerA)
-        const playerB = new PlayerB(this);
-        this.add(playerB)
+        // const playerA = new PlayerA(this);
+        // this.add(playerA)
+        // const playerB = new PlayerB(this);
+        // this.add(playerB)
 
         // const chicken = new Chicken(this);
         // chicken.state.landed = true;
