@@ -30,22 +30,35 @@ class SeedScene extends Scene {
         const playerB = new PlayerB(this);
         this.add(playerB);
 
-        this.tables = [];
+        // this.tables = [];
 
-        const NUM_TABLES = 3;
-        for (let i = 0; i < NUM_TABLES; i++) {
-            const table = new Table(this, playerA, playerB);
-            this.add(table);
-            this.tables.push(table)
-        }
+        // const NUM_TABLES = 3;
+        // for (let i = 0; i < NUM_TABLES; i++) {
+        //     const table = new Table(this, playerA, playerB);
+        //     this.add(table);
+        //     this.tables.push(table)
+        // }
+        const table1 = new Table(this, -2, 0, -1);
+        this.add(table1);
+        const table2 = new Table(this, 3, 0, 1.5);
+        this.add(table2);
+        const table3 = new Table(this, 2, 0, -3);
+        this.add(table3);
 
-        this.chairs = [];
-        const NUM_CHAIRS = 3;
-        for (let i = 0; i < NUM_CHAIRS; i++) {
-            const chair = new Chair(this, playerA, playerB);
-            this.add(chair);
-            this.chairs.push(chair)
-        }
+        const chair1 = new Chair(this, -4, 0, -2);
+        this.add(chair1);
+        const chair2 = new Chair(this, -1, 0, 3);
+        this.add(chair2);
+        const chair3 = new Chair(this, 1, 0, 2);
+        this.add(chair3);
+
+        // this.chairs = [];
+        // const NUM_CHAIRS = 3;
+        // for (let i = 0; i < NUM_CHAIRS; i++) {
+        //     const chair = new Chair(this, playerA, playerB);
+        //     this.add(chair);
+        //     this.chairs.push(chair)
+        // }
 
         // const playerA = new PlayerA(this);
         // this.add(playerA)

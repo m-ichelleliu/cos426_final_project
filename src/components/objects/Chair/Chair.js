@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { Land as Land } from '../Land/index.js';
 
 class Chair extends Group {
-    constructor(parent, playerA, playerB) {
+    constructor(parent, x, y, z) {
         // Call parent Group() constructor// 
         super();
 
@@ -22,7 +22,8 @@ class Chair extends Group {
         };
         // const SCALE = new THREE.Vector3(12, 4, 12);
         // const OFFSET = new THREE.Vector3(-6, 0.4, -6);
-        this.position.add(new THREE.Vector3().random()).multiplyScalar(Land.width - 1).subScalar(Land.width / 2 - 0.5); //SCALE LATER 
+        //this.position.add(new THREE.Vector3().random()).multiplyScalar(Land.width - 1).subScalar(Land.width / 2 - 0.5); //SCALE LATER 
+        this.position.add(new THREE.Vector3(x, y, z));
         console.log(this.position)
         if (this.position.x < -1 * Land.width / 2) {
             this.position.x = -1 * Land.width / 2;
@@ -54,32 +55,32 @@ class Chair extends Group {
 
         this.name = 'chair';
         // let items = this.parent.children;
-        while (true) {
-            let noCollisions = true;
-            let boxA = new THREE.Box3().setFromObject(playerA);
-            let boxB = new THREE.Box3().setFromObject(playerB);
-            let thisBox = new THREE.Box3().setFromObject(this);
-            if (boxA.intersectsBox(thisBox) || boxB.intersectsBox(thisBox)) {
-                noCollisions = true;
-                this.position = new THREE.Vector3();
-                this.position.add(new THREE.Vector3().random()).multiplyScalar(Land.width - 1).subScalar(Land.width / 2 - 0.5);
-            }
-            // for (let item of items) {
-            //     if (item instanceof PlayerA || item instanceof PlayerB) {
-            //         let thatBox = new THREE.Box3().setFromObject(item);
-            //         let thisBox = new THREE.Box3().setFromObject(this);
-            //         // console.log(thatBox.intersectsBox(thisBox))
-            //         if (thatBox.intersectsBox(thisBox)) {
-            //             this.position = new THREE.Vector3();
-            //             this.position.add(new THREE.Vector3().random()).multiplyScalar(Land.width - 1).subScalar(Land.width / 2 - 0.5);
-            //             noCollisions = false;
-            //         }
-            //     }
-            // }
-            if (noCollisions) {
-                break;
-            }
-        }
+        // while (true) {
+        //     let noCollisions = true;
+        //     let boxA = new THREE.Box3().setFromObject(playerA);
+        //     let boxB = new THREE.Box3().setFromObject(playerB);
+        //     let thisBox = new THREE.Box3().setFromObject(this);
+        //     if (boxA.intersectsBox(thisBox) || boxB.intersectsBox(thisBox)) {
+        //         noCollisions = true;
+        //         this.position = new THREE.Vector3();
+        //         this.position.add(new THREE.Vector3().random()).multiplyScalar(Land.width - 1).subScalar(Land.width / 2 - 0.5);
+        //     }
+        //     // for (let item of items) {
+        //     //     if (item instanceof PlayerA || item instanceof PlayerB) {
+        //     //         let thatBox = new THREE.Box3().setFromObject(item);
+        //     //         let thisBox = new THREE.Box3().setFromObject(this);
+        //     //         // console.log(thatBox.intersectsBox(thisBox))
+        //     //         if (thatBox.intersectsBox(thisBox)) {
+        //     //             this.position = new THREE.Vector3();
+        //     //             this.position.add(new THREE.Vector3().random()).multiplyScalar(Land.width - 1).subScalar(Land.width / 2 - 0.5);
+        //     //             noCollisions = false;
+        //     //         }
+        //     //     }
+        //     // }
+        //     if (noCollisions) {
+        //         break;
+        //     }
+        // }
         this.addChair();
         
         // Add self to parent's update list

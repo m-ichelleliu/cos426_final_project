@@ -106,6 +106,8 @@ hr {
     transform: translate(-50%, -50%);
     color: white;
     text-align: center;
+    font-size: 20px;
+    width: 65%
     /* position: fixed;
     margin: auto;
     text-align: center;
@@ -119,6 +121,7 @@ hr {
     transform: translate(-50%, -50%);
     text-align: center;
     color: white;
+    font-size: 20px;
 }
 
 #instructions {
