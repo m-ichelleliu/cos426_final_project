@@ -40,12 +40,26 @@ class Chicken extends Group {
     addChicken() {
         const loader = new GLTFLoader();
         loader.load(MODEL, (gltf) => {
-            gltf.scene.position.x = this.position.x;
-            gltf.scene.position.y = this.position.y;
-            gltf.scene.position.z = this.position.z;
-            const SCALE = 1.5;
-            gltf.scene.scale.set(SCALE, SCALE, SCALE);
+            console.log("Before conversion", this.position);
+            if (this.state.shooter == 'A') {
+                gltf.scene.position.x = (this.position).x + 1.5;
+                gltf.scene.position.y = (this.position).y;
+                gltf.scene.position.z = (this.position).z + 6.5;
+            } else {
+                gltf.scene.position.x = (this.position).x - 1.2;
+                gltf.scene.position.y = (this.position).y;
+                gltf.scene.position.z = (this.position).z - .75;
+            }
             this.add(gltf.scene);
+            // this.worldToLocal(this.state.position);
+            this.worldToLocal(gltf.scene.position);
+            this.state.startPos.copy(gltf.scene.position)
+            // let pos = new THREE.Vector3();
+            // this.getWorldPosition(pos);
+            // this.getWorldPosition(this.state.startPos);
+            // console.log("WorldPos", pos, "ScenePos", gltf.scene.position);
+            // const SCALE = 1.5;
+            // gltf.scene.scale.set(SCALE, SCALE, SCALE);
         });
     }
 

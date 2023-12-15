@@ -48,6 +48,16 @@ class Land extends Group {
             // this.test = 'hi';
             // LAND_DIMENSIONS = boundingBox.getSize(new THREE.Vector3());
             console.log('new Dimensions:', new THREE.Box3().setFromObject(gltf.scene));
+
+            let pos = new THREE.Vector3();
+            this.getWorldPosition(pos);
+            let thisBox = new THREE.Box3().setFromObject(this, true);
+            console.log("Land bounding box", thisBox)
+            let scl = new THREE.Vector3();
+            this.getWorldScale(scl)
+            console.log("World posiiton", pos, gltf.scene.position);
+            console.log("World scale", scl, gltf.scene.scale);
+
             this.add(gltf.scene);
         });
     }

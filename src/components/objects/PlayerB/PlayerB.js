@@ -83,8 +83,8 @@ class PlayerB extends Group {
             gltf.scene.position.y = this.position.y;
             gltf.scene.position.z = this.position.z;
 
-            const SCALE = 1.5;
-            gltf.scene.scale.set(SCALE, SCALE, SCALE);
+            // const SCALE = 1.5;
+            // gltf.scene.scale.set(SCALE, SCALE, SCALE);
             this.add(gltf.scene);
         });
     }
@@ -98,9 +98,12 @@ class PlayerB extends Group {
 
             const chicken = new Chicken(scene);
             chicken.state.player = this;
+            chicken.state.shooter = 'B';
             chicken.state.startTime = timeStamp;
             chicken.state.startDirection.copy(DIRECTION_VECTOR[this.state.direction]);
-            chicken.position.copy(this.position);
+            chicken.state.position = new THREE.Vector3();
+            this.getWorldPosition(chicken.position);
+            console.log("Just added a chicken at", chicken.position)
             // console.log("hi " + this.position.x + " " + this.position.y + " " + this.position.z);
             // console.log(chicken.state.startPos.x + " " + chicken.state.startPos.y + " " + chicken.state.startPos.z);
             scene.add(chicken);
