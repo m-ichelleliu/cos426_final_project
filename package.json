@@ -1,7 +1,7 @@
 {
   "name": "crispy-combat",
   "repository": "cos426finalproject",
-  "homepage": ".",
+  "homepage": "https://donnawang47.github.io/cos426_final_project",
   "version": "0.1.0",
   "title": "Crispy Combat",
   "description": "SHORT DESCRIPTION OF PROJECT HERE. ONE TO TWO SENTENCES MAX",
@@ -10,7 +10,7 @@
     "graphics",
     "three.js",
     "COS 426",
-    "keywor0d",
+    "Late Meal",
     "keyword1",
     "keyword2-etc",
     "but this last entry CANNOT have a comma after it ->"
