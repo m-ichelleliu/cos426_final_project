@@ -14,6 +14,7 @@ class SeedScene extends Scene {
             gui: new Dat.GUI(), // Create GUI for scene
             rotationSpeed: 1,
             updateList: [],
+            gameEnded: false,
         };
 
         // Set background to a nice color
@@ -68,7 +69,7 @@ class SeedScene extends Scene {
         // const chicken = new Chicken(this);
         // chicken.state.landed = true;
         // this.add(chicken);
-        
+
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);

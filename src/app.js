@@ -62,7 +62,7 @@ const onAnimationFrameHandler = (timeStamp) => {
     window.requestAnimationFrame(onAnimationFrameHandler);
 
     // on game screen and not paused
-    if (!screens["menu"] && !screens["ending"] && !screens["pause"]) {
+    if (!screens["menu"] && !screens["ending"] && !screens["pause"] && !scene.state.gameEnded) {
 
         renderer.render(scene, camera);
         // console.log(camera.position);

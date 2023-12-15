@@ -170,6 +170,7 @@ class PlayerA extends Group {
                     if (item instanceof Chicken && item.state.player == this) {
                         continue;
                     }
+                    this.parent.state.gameEnded = true;
                     pages.game_over(document, true);
                 }
             }
