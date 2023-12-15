@@ -122,7 +122,7 @@ export function handlePlayerBControls(scene, keypress, character, timeStamp) {
     if (keypress['w']) {
         // check if reached bounds
         let newZ = playerB.position.z - speed;
-        if (newZ < -1 * Land.height  || newZ >= Land.height + 5) {
+        if (newZ < -1 * Land.height  || newZ >= Land.height + 1) {
             newZ = playerB.position.z
         }
         playerB.position.z = newZ;
@@ -131,7 +131,7 @@ export function handlePlayerBControls(scene, keypress, character, timeStamp) {
     if (keypress['s']) {
         let newZ = playerB.position.z + speed;
         // console.log(playerA.position.z);
-        if (newZ < -2 || newZ >= Land.height + 5)  {
+        if (newZ < -1 * Land.height || newZ >= Land.height + 1)  {
             newZ = playerB.position.z
         }
         playerB.position.z = newZ;
@@ -149,7 +149,7 @@ export function handlePlayerBControls(scene, keypress, character, timeStamp) {
     if (keypress['d']) {
         let newX = playerB.position.x + speed;
         // console.log(playerA.position.z);
-        if (newX < -1 * Land.height / 2 - 5 || newX >= Land.height )  {
+        if (newX < -1 * Land.height - 2 || newX >= Land.height )  {
             newX = playerB.position.x
         }
         playerB.position.x = newX;
