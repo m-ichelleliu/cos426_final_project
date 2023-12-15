@@ -8,7 +8,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, buildPath),
         filename: '[name].[hash].js',
-        publicPath: `/${pkg.repository}/`,
+        publicPath: '/',
     },
     target: 'web',
     devtool: 'source-map',
