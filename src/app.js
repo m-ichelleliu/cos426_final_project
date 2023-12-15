@@ -116,8 +116,9 @@ window.addEventListener('keydown', event => handlers.handleScreens(event, screen
 //     //     }
 //     // }
 
-
-// });
+window.addEventListener('dblclick', function(event) {
+    this.location.reload(true);
+});
 
 pages.init_page(document, canvas);
 // export default scene;
