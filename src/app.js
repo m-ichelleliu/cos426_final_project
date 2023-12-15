@@ -22,7 +22,7 @@ const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 
 // Set up camera
-camera.position.set(6, 3, -10);
+camera.position.set(9.2, 18, -15.5);
 camera.lookAt(new Vector3(0, 0, 0));
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -37,9 +37,10 @@ document.body.appendChild(canvas);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.enablePan = false;
-controls.minDistance = 4;
-controls.maxDistance = 16;
+// controls.minDistance = 4;
+// controls.maxDistance = 16;
 controls.update();
+
 
 // global variables
 const keypress = {};
@@ -64,6 +65,7 @@ const onAnimationFrameHandler = (timeStamp) => {
     if (!screens["menu"] && !screens["ending"] && !screens["pause"]) {
 
         renderer.render(scene, camera);
+        // console.log(camera.position);
         scene.update && scene.update(timeStamp);
 
         // start game
@@ -113,9 +115,7 @@ window.addEventListener('keydown', event => handlers.handleScreens(event, screen
 //     //         renderGame();
 //     //     }
 //     // }
-window.addEventListener('dblclick', function(event) {
-    this.location.reload(true);
-});
+
 
 // });
 

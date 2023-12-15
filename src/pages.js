@@ -20,12 +20,12 @@ export function start_game(document, canvas) {
     instructions.classList.add('invisible')
 }
 
-export function quit(document, canvas) {
-    let ending = document.createElement('div');
-    ending.id = 'over';
-    ending.innerHTML = GAMEOVER;
-    document.body.appendChild(ending)
-}
+// export function quit(document, canvas) {
+//     let ending = document.createElement('div');
+//     ending.id = 'over';
+//     ending.innerHTML = GAMEOVER;
+//     document.body.appendChild(ending)
+// }
 
 export function game_over(document, p1won) {
     // console.log("document", document)

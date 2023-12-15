@@ -61,25 +61,38 @@ export function handlePlayerAControls(scene, keypress, character, timeStamp) {
     let speed = playerA.state.speed;
     if (keypress['up']) {
         // check if reached bounds
-        // const newZ = playerA.position.z - speed;
-        // if (newZ < -1 * Land.height / 2 || newPos.x >= Land.width / 2) {
-        //     this.direction = new THREE.Vector3(this.direction.x * -1, 0, 0);
-        // }
-        // switch direction to into the page
-        // move forward
-        playerA.position.z -= speed;
+        let newZ = playerA.position.z - speed;
+        if (newZ < -1 * Land.height / 2 || newZ >= Land.height + 5) {
+            newZ = playerA.position.z
+        }
+        playerA.position.z = newZ;
         playerA.state.direction = 'N';
     }
     if (keypress['down']) {
-        playerA.position.z += speed;
+        let newZ = playerA.position.z + speed;
+        // console.log(playerA.position.z);
+        if (newZ < -1 * Land.height / 2 || newZ >= Land.height + 5)  {
+            newZ = playerA.position.z
+        }
+        playerA.position.z = newZ;
         playerA.state.direction = 'S';
     }
     if (keypress['left']) {
-        playerA.position.x -= speed;
+        let newX = playerA.position.x - speed;
+        // console.log(playerA.position.z);
+        if (newX < -1 * Land.height / 2 - 1|| newX >= Land.height + 6)  {
+            newX = playerA.position.x
+        }
+        playerA.position.x = newX;
         playerA.state.direction = 'W';
     }
     if (keypress['right']) {
-        playerA.position.x += speed;
+        let newX = playerA.position.x + speed;
+        // console.log(playerA.position.z);
+        if (newX < -1 * Land.height / 2 - 5 || newX >= Land.height + 6)  {
+            newX = playerA.position.x
+        }
+        playerA.position.x = newX;
 
         // // determine how much to turn player model
         // const rotationOffset = DIRECTION_IDX[playerA.state.direction] - DIRECTION_IDX['E'] * Math.PI/4;
@@ -107,19 +120,39 @@ export function handlePlayerBControls(scene, keypress, character, timeStamp) {
     let playerB = scene.getObjectByName(character);
     let speed = playerB.state.speed;
     if (keypress['w']) {
-        playerB.position.z -= speed;
+        // check if reached bounds
+        let newZ = playerB.position.z - speed;
+        if (newZ < -1 * Land.height  || newZ >= Land.height + 5) {
+            newZ = playerB.position.z
+        }
+        playerB.position.z = newZ;
         playerB.state.direction = 'N';
     }
     if (keypress['s']) {
-        playerB.position.z += speed;
+        let newZ = playerB.position.z + speed;
+        // console.log(playerA.position.z);
+        if (newZ < -2 || newZ >= Land.height + 5)  {
+            newZ = playerB.position.z
+        }
+        playerB.position.z = newZ;
         playerB.state.direction = 'S';
     }
     if (keypress['a']) {
-        playerB.position.x -= speed;
+        let newX = playerB.position.x - speed;
+        // console.log(playerA.position.z);
+        if (newX < -1 * Land.height - 2|| newX >= Land.height )  {
+            newX = playerB.position.x
+        }
+        playerB.position.x = newX;
         playerB.state.direction = 'W';
     }
     if (keypress['d']) {
-        playerB.position.x += speed;
+        let newX = playerB.position.x + speed;
+        // console.log(playerA.position.z);
+        if (newX < -1 * Land.height / 2 - 5 || newX >= Land.height )  {
+            newX = playerB.position.x
+        }
+        playerB.position.x = newX;
         playerB.state.direction = 'E';
     }
 
@@ -138,15 +171,15 @@ export function handlePlayerBControls(scene, keypress, character, timeStamp) {
 
 
 export function handleScreens(event, screens, document, canvas, scene) {
-    // quit: game -> ending
-    if (event.key == 'q' && !screens['ending'] && !screens['menu']) {
-        screens['menu'] = false;
-        screens['pause'] = false;
-        screens['ending'] = true;
-        pages.game_over(document, character); // character: winner
-    }
+    // // quit: game -> ending
+    // if (event.key == 'q' && !screens['ending'] && !screens['menu']) {
+    //     screens['menu'] = false;
+    //     screens['pause'] = false;
+    //     screens['ending'] = true;
+    //     pages.game_over(document); // character: winner
+    // }
     // restart: ending -> menu
-    else if (event.key == " " && screens["ending"]) {
+    if (event.key == " " && screens["ending"]) {
         // reset game
         screens["ending"] = false;
         screens['pause'] = false;
@@ -170,7 +203,7 @@ export function handleScreens(event, screens, document, canvas, scene) {
         pause.classList.add('invisible');
     }
     // pause: game -> pause
-    else if (event.key == 'p' && !screens["ending"]) {
+    else if (event.key == 'p' && !scene.state.endGame ) {
         screens["pause"] = true;
 
         let pause = document.getElementById("instructions");
